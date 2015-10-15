@@ -573,6 +573,7 @@ class Core(Collection):
         self.mdata = mData.Core(name)
         self.cplans.add('input')
         self.loaded = False
+        self.graph = 1
         super(Core, self).__init__([])
         self.add(Sample(exp_data={'depth':'all'}))
 

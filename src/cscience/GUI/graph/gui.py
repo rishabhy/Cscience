@@ -23,9 +23,7 @@ class PlotWindow(wx.Frame):
 
     def __init__(self, parent, samples, view):
         super(PlotWindow, self).__init__(parent, wx.ID_ANY, samples[0]['core'])
-        self.SetName('Plotting Window '+samples[0]['core'])
-        self._persistentObjects = {}
-        print samples[0]['core']
+        self.SetName('Plotting Window '+samples[0]['core']+str(parent.core.graph))
 
         self._mgr = aui.AuiManager(self,
                     agwFlags=aui.AUI_MGR_DEFAULT & ~aui.AUI_MGR_ALLOW_FLOATING)
@@ -60,7 +58,7 @@ class PlotWindow(wx.Frame):
                           Movable(False).Resizable(True))
 
         self.infopanel = InfoPanel(self)
-        self.infopanel.set_attributes([("hi", "there")])
+        self.infopanel.set_attributes([(samples[0]['core'], parent.core.graph)])
         self._mgr.AddPane(self.infopanel, aui.AuiPaneInfo().Name('ginfopanel').
                           Layer(10).Bottom().DockFixed().Gripper(False).
                           CaptionVisible(False).CloseButton(False))
@@ -77,6 +75,7 @@ class PlotWindow(wx.Frame):
         self._mgr.Update()
 
         self.build_pointset()
+        parent.core.graph += 1
 
     def r2_update(self, event):
         self.infopanel.set_attributes([
